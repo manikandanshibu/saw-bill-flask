@@ -1,0 +1,98 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+    <div class="row mb-4">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header bg-success text-white">
+                    <h5 class="mb-0">Add New Tree</h5>
+                </div>
+                <div class="card-body">
+                    <form method="POST" action="{{ url_for('add_tree') }}">
+                        <div class="mb-3">
+                            <label for="tree_id" class="form-label">Tree ID</label>
+                            <input type="text" class="form-control" id="tree_id" name="tree_id" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="tree_measurement" class="form-label">Tree Measurement</label>
+                            <input type="text" class="form-control" id="tree_measurement" name="tree_measurement" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="tree_quantity" class="form-label">Tree Quantity</label>
+                            <input type="number" class="form-control" id="tree_quantity" name="tree_quantity" value="1" min="1" required>
+                        </div>
+                        <button type="submit" class="btn btn-success">Add Tree</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+                    <h5 class="mb-0">Tree List</h5>
+                    <input type="text" id="searchInput" class="form-control form-control-sm w-25" placeholder="Search trees...">
+                </div>
+                <div class="card-body">
+                    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+                        {% for tree in trees %}
+                        <div class="col tree-card">
+                            <div class="card h-100">
+                                <div class="card-header bg-light">
+                                    <h6 class="mb-0">Tree #{{ tree.get('treeId') }}</h6>
+                                </div>
+                                <div class="card-body">
+                                    <p><strong>Measurement:</strong> {{ tree.get('treeMeasurement') }}</p>
+                                    <p><strong>Quantity:</strong> {{ tree.get('treeQuantity', 1) }}</p>
+                                    <p class="text-muted mb-0">
+                                        <small>Added: {{ tree.get('timestamp').strftime('%Y-%m-%d %H:%M') if tree.get('timestamp') else 'No date' }}</small>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        {% else %}
+                        <div class="col-12">
+                            <div class="alert alert-info" role="alert">
+                                No trees found.
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .card {
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        transition: transform 0.2s ease-in-out;
+    }
+    .tree-card .card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    }
+</style>
+
+<script>
+document.getElementById('searchInput').addEventListener('keyup', function() {
+    const searchText = this.value.toLowerCase();
+    const treeCards = document.getElementsByClassName('tree-card');
+    
+    Array.from(treeCards).forEach(card => {
+        const treeId = card.querySelector('.card-header').textContent.toLowerCase();
+        const measurement = card.querySelector('.card-body').textContent.toLowerCase();
+        
+        if (treeId.includes(searchText) || measurement.includes(searchText)) {
+            card.style.display = '';
+        } else {
+            card.style.display = 'none';
+        }
+    });
+});
+</script>
+{% endblock %} 

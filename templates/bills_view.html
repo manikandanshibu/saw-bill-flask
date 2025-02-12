@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+    <h2 class="mb-4">Bills List</h2>
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+        {% for bill in bills %}
+        <div class="col">
+            <div class="card h-100">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="card-title mb-0">Bill #{{ bill.get('customerId') }}</h5>
+                </div>
+                <div class="card-body">
+                    <h6 class="card-subtitle mb-2 text-muted">{{ bill.get('timestamp').strftime('%Y-%m-%d %H:%M') if bill.get('timestamp') else 'No date' }}</h6>
+                    <div class="card-text">
+                        <p><strong>Customer Name:</strong> {{ bill.get('name') }}</p>
+                        <p><strong>Phone:</strong> {{ bill.get('phoneNumber') or 'N/A' }}</p>
+                        <p><strong>Tree ID:</strong> {{ bill.get('treeId') }}</p>
+                        <p><strong>Measurement:</strong> {{ bill.get('treeMeasurement') }}</p>
+                        <p><strong>Quantity:</strong> {{ bill.get('treeQuantity') }}</p>
+                        <div class="mt-3">
+                            <p class="mb-1"><strong>Total Amount:</strong> ₹{{ "%.2f"|format(bill.get('amount', 0)) }}</p>
+                            <p class="mb-1"><strong>Amount Paid:</strong> ₹{{ "%.2f"|format(bill.get('amountPaid', 0)) }}</p>
+                            <p class="mb-1"><strong>Balance:</strong> 
+                                <span class="{% if bill.get('amount', 0) - bill.get('amountPaid', 0) > 0 %}text-danger{% else %}text-success{% endif %}">
+                                    ₹{{ "%.2f"|format(bill.get('amount', 0) - bill.get('amountPaid', 0)) }}
+                                </span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer text-muted">
+                    <small>Payment Status: 
+                        {% if bill.get('amount') == bill.get('amountPaid') %}
+                            <span class="badge bg-success">Paid</span>
+                        {% elif bill.get('amountPaid', 0) > 0 %}
+                            <span class="badge bg-warning">Partial</span>
+                        {% else %}
+                            <span class="badge bg-danger">Unpaid</span>
+                        {% endif %}
+                    </small>
+                </div>
+            </div>
+        </div>
+        {% else %}
+        <div class="col-12">
+            <div class="alert alert-info" role="alert">
+                No bills found.
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+<style>
+    .card {
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        transition: transform 0.2s ease-in-out;
+    }
+    .card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    }
+    .badge {
+        font-size: 0.9em;
+    }
+</style>
+{% endblock %} 

@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+    <h2 class="mb-4">Create New Bill</h2>
+    <form method="POST">
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <label for="customer_id" class="form-label">Customer ID</label>
+                <input type="text" class="form-control" id="customer_id" name="customer_id" required>
+            </div>
+            <div class="col-md-6 mb-3">
+                <label for="name" class="form-label">Customer Name</label>
+                <input type="text" class="form-control" id="name" name="name" required>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <label for="phone_number" class="form-label">Phone Number</label>
+                <input type="tel" class="form-control" id="phone_number" name="phone_number">
+            </div>
+            <div class="col-md-6 mb-3">
+                <label for="tree_id" class="form-label">Tree ID</label>
+                <input type="text" class="form-control" id="tree_id" name="tree_id" required>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <label for="tree_measurement" class="form-label">Tree Measurement</label>
+                <input type="text" class="form-control" id="tree_measurement" name="tree_measurement" required>
+            </div>
+            <div class="col-md-6 mb-3">
+                <label for="tree_quantity" class="form-label">Tree Quantity</label>
+                <input type="number" class="form-control" id="tree_quantity" name="tree_quantity" value="1">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <label for="amount" class="form-label">Total Amount</label>
+                <input type="number" class="form-control" id="amount" name="amount" required>
+            </div>
+            <div class="col-md-6 mb-3">
+                <label for="amount_paid" class="form-label">Amount Paid</label>
+                <input type="number" class="form-control" id="amount_paid" name="amount_paid" value="0">
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>
+{% endblock %} 

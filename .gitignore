@@ -1,0 +1,15 @@
+ # Environment variables
+.env
+
+# Firebase credentials
+serviceAccountKey.json
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+venv/
+
+# IDE
+.vscode/
+.idea/

@@ -1,0 +1,121 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+    <div class="row justify-content-center align-items-center min-vh-100">
+        <div class="col-md-8">
+            <div class="grid-container">
+                <a href="{{ url_for('billing_form') }}" class="grid-item">
+                    <div class="icon-container">
+                        <i class="fas fa-file-invoice"></i>
+                    </div>
+                    <h3>Bill Form</h3>
+                </a>
+                
+                <a href="{{ url_for('bills_view') }}" class="grid-item">
+                    <div class="icon-container">
+                        <i class="fas fa-list-alt"></i>
+                    </div>
+                    <h3>Bills</h3>
+                </a>
+                
+                <a href="{{ url_for('customer_details') }}" class="grid-item">
+                    <div class="icon-container">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h3>Customers</h3>
+                </a>
+                
+                <a href="{{ url_for('tree_details') }}" class="grid-item">
+                    <div class="icon-container">
+                        <i class="fas fa-tree"></i>
+                    </div>
+                    <h3>Trees</h3>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .grid-container {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+        padding: 20px;
+    }
+
+    .grid-item {
+        background: white;
+        border-radius: 15px;
+        padding: 30px;
+        text-align: center;
+        text-decoration: none;
+        color: #333;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        min-height: 200px;
+    }
+
+    .grid-item:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    .icon-container {
+        font-size: 3rem;
+        margin-bottom: 15px;
+        width: 80px;
+        height: 80px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        background: #f8f9fa;
+        transition: all 0.3s ease;
+    }
+
+    .grid-item:nth-child(1) .icon-container {
+        color: #28a745;
+    }
+
+    .grid-item:nth-child(2) .icon-container {
+        color: #007bff;
+    }
+
+    .grid-item:nth-child(3) .icon-container {
+        color: #dc3545;
+    }
+
+    .grid-item:nth-child(4) .icon-container {
+        color: #17a2b8;
+    }
+
+    .grid-item:hover .icon-container {
+        transform: scale(1.1);
+    }
+
+    .grid-item h3 {
+        margin: 0;
+        font-size: 1.5rem;
+        color: #333;
+    }
+
+    @media (max-width: 768px) {
+        .grid-container {
+            grid-template-columns: 1fr;
+        }
+        
+        .grid-item {
+            min-height: 150px;
+        }
+    }
+</style>
+
+<!-- Add Font Awesome -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+{% endblock %} 
