@@ -17,7 +17,7 @@ firebase_credentials = {
     "type": "service_account",
     "project_id": os.getenv('FIREBASE_PROJECT_ID'),
     "private_key_id": os.getenv('FIREBASE_PRIVATE_KEY_ID'),
-    "private_key": os.getenv('FIREBASE_PRIVATE_KEY').replace('\\n', '\n'),
+    "private_key": os.getenv('FIREBASE_PRIVATE_KEY', '').replace('\\n', '\n') if os.getenv('FIREBASE_PRIVATE_KEY') else None,
     "client_email": os.getenv('FIREBASE_CLIENT_EMAIL'),
     "client_id": os.getenv('FIREBASE_CLIENT_ID'),
     "auth_uri": "https://accounts.google.com/o/oauth2/auth",
@@ -27,10 +27,17 @@ firebase_credentials = {
     "universe_domain": "googleapis.com"
 }
 
-# Initialize Firebase Admin
-cred = credentials.Certificate(firebase_credentials)
-firebase_admin.initialize_app(cred)
-db = firestore.client()
+# Initialize Firebase Admin with error handling
+try:
+    cred = credentials.Certificate(firebase_credentials)
+    firebase_admin.initialize_app(cred)
+    db = firestore.client()
+    print("Firebase initialized successfully")
+except Exception as e:
+    print(f"Firebase initialization error: {e}")
+    # Uncomment below to exit if Firebase is critical for your app
+    # import sys
+    # sys.exit(1)
 
 @app.route('/')
 def home():
