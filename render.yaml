@@ -6,4 +6,16 @@ services:
     startCommand: gunicorn app:app
     envVars:
       - key: PYTHON_VERSION
-        value: 3.11 
+        value: 3.11
+      - key: FIREBASE_PROJECT_ID
+        value: saw-bill
+      - key: FIREBASE_PRIVATE_KEY_ID
+        value: <your-private-key-id>
+      - key: FIREBASE_PRIVATE_KEY
+        value: <your-private-key> # Ensure proper formatting
+      - key: FIREBASE_CLIENT_EMAIL
+        value: <your-client-email>
+      - key: FIREBASE_CLIENT_ID
+        value: <your-client-id>
+      - key: FIREBASE_CLIENT_CERT_URL
+        value: <your-client-cert-url>
